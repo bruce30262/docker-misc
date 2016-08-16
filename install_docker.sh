@@ -16,3 +16,5 @@ echo "done"
 # check if docker is successfully installed
 echo "checking docker..."
 docker version
+
+echo "logout & login to apply the latest docker setting."
