@@ -1,2 +1,2 @@
-# dockerhub
-some lazy script. maybe for autobuild in the future
+# docker-misc
+Some lazy script. Also for autobuild in dockerhub.
