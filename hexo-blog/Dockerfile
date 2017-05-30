@@ -17,6 +17,10 @@ RUN npm config set user 0 && npm config set unsafe-perm true
 ## install hexo-cli globally
 RUN npm install -g hexo-cli
 
+## set timezone to Asia/Taipei
+RUN echo "Asia/Taipei" > /etc/timezone
+RUN dpkg-reconfigure --frontend noninteractive tzdata
+
 ## set the workdir
 WORKDIR /app
 
