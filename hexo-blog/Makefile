@@ -8,3 +8,6 @@ run:
 
 exec:
 	docker exec -it hexo-blog /bin/bash
+
+deploy:
+	docker exec -it hexo-blog /bin/bash -c "/app/script/deploy.sh"
