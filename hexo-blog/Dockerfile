@@ -8,8 +8,8 @@ ENV HEXO_SERVER_PORT=4000
 
 ## update the respositories
 RUN apt-get update
-## install git for deployment
-RUN apt-get install git -y
+## install git & expect for deployment
+RUN apt-get install git expect -y
 
 ## solve permission issue
 RUN npm config set user 0 && npm config set unsafe-perm true
