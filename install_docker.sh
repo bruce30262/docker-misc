@@ -19,5 +19,10 @@ sudo add-apt-repository \
 # Install docker-ce
 sudo apt-get install docker-ce 
 
+# Add user to docker group
+sudo usermod -aG docker $USER
+
 # Check docker status
 sudo service docker status
+
+echo "[!] Logout and login to use docker without sudo."
