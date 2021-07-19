@@ -9,7 +9,6 @@ ENV LC_ALL en_US.UTF-8
 # clone repo & install 
 RUN git clone https://github.com/bruce30262/bruce30262.github.io.git /app
 RUN chown -R jekyll /app
-RUN cd /app && bundle update --bundler 
 RUN cd /app && bundle install && gem install jekyll-admin
 
 # cmd
