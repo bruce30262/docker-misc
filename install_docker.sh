@@ -1,23 +1,41 @@
-#!/bin/sh
+#!/bin/bash
 
-# Install docker-ce in Ubuntu Linux
+# Install docker-ce and docker compose in Ubuntu/Debian Linux
 
 set -ex
 
-# Update
-sudo apt-get -y update
-# Allow apt to use a repository over HTTPS
-sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common
-# Add Docker’s official GPG key
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-# Set up the stable repository.
-sudo add-apt-repository \
-    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-    $(lsb_release -cs) \
-    stable"
+. /etc/os-release
 
-# Install docker-ce
-sudo apt-get install docker-ce 
+CUR_OS=
+
+case $ID in
+    ubuntu) echo "OS: Ubuntu"
+        ;;
+    debian) echo "OS: Debian"
+        ;;
+    *) 
+        echo "Unsupported OS: $ID"
+        exit 1
+        ;;
+esac
+
+# Update and install dependencies
+sudo apt-get -y update
+sudo apt-get -y install ca-certificates curl
+# add key to keyrings
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/$ID/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/$ID \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+
+# Install docker-ce and docker compose
+sudo apt-get install -y docker-ce docker-compose-plugin
 
 # Add user to docker group
 sudo usermod -aG docker $USER
