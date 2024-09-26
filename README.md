@@ -1,2 +1,2 @@
 # docker-misc
-Some lazy script. Also for autobuild in dockerhub.
+Some lazy scripts and configs for my own docker containers.
