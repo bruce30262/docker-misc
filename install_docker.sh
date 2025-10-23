@@ -2,16 +2,19 @@
 
 # Install docker-ce and docker compose in Ubuntu/Debian Linux
 
-set -ex
+set -e
 
 . /etc/os-release
-
-CUR_OS=
 
 case $ID in
     ubuntu) echo "OS: Ubuntu"
         ;;
     debian) echo "OS: Debian"
+        ;;
+    linuxmint)
+        echo "Detected Linux Mint, treating as Ubuntu"
+        ID=ubuntu
+        VERSION_CODENAME=$UBUNTU_CODENAME
         ;;
     *) 
         echo "Unsupported OS: $ID"
@@ -30,7 +33,7 @@ sudo chmod a+r /etc/apt/keyrings/docker.asc
 # Add the repository to apt sources:
 echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/$ID \
-  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  $(echo "$VERSION_CODENAME") stable" | \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update
 
